@@ -3,9 +3,11 @@ package com.tchip.autoprovidertest;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.database.ContentObserver;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -25,6 +27,11 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 
 		initialLayout();
+
+		getContentResolver()
+				.registerContentObserver(
+						Uri.parse("content://com.tchip.provider.AutoProvider/state/name/"),
+						true, new AutoContentObserver(new Handler()));
 	}
 
 	private void initialLayout() {
@@ -61,7 +68,7 @@ public class MainActivity extends Activity {
 					cursor.close();
 				} else {
 				}
-
+				textGet.setText("dbValue:" + dbValue);
 				Toast.makeText(MainActivity.this, "dbValue:" + dbValue,
 						Toast.LENGTH_SHORT).show();
 			}
@@ -93,6 +100,29 @@ public class MainActivity extends Activity {
 			default:
 				break;
 			}
+		}
+	}
+
+	public class AutoContentObserver extends ContentObserver {
+
+		public AutoContentObserver(Handler handler) {
+			super(handler);
+		}
+
+		@Override
+		public void onChange(boolean selfChange, Uri uri) {
+			Toast.makeText(MainActivity.this,
+					"onChange,selfChange:" + selfChange + ",Uri:" + uri,
+					Toast.LENGTH_SHORT).show();
+			super.onChange(selfChange, uri);
+		}
+
+		@Override
+		public void onChange(boolean selfChange) {
+			Toast.makeText(MainActivity.this,
+					"onChange,selfChange:" + selfChange, Toast.LENGTH_SHORT)
+					.show();
+			super.onChange(selfChange);
 		}
 
 	}
