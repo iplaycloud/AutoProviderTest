@@ -92,7 +92,8 @@ public class MainActivity extends Activity {
 				ContentResolver contentResolver = getContentResolver();
 				ContentValues values = new ContentValues();
 				values.put("value", etSetValue.getText().toString());
-				int count = contentResolver.update(uri, values, null, null);
+				int count = contentResolver.update(uri, values, "name=?",
+						new String[] {  etSetName.getText().toString() });
 				Log.v("AutoProvider", "Update count:" + count);
 			}
 				break;
