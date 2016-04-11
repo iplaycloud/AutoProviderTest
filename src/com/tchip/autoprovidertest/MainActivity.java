@@ -111,11 +111,14 @@ public class MainActivity extends Activity {
 
 		@Override
 		public void onChange(boolean selfChange, Uri uri) {
+			String name = uri.getLastPathSegment();// getPathSegments().get(2);
+			if (name.equals("state")) { // insert
 
-			String name = uri.getPathSegments().get(2);
-			Toast.makeText(MainActivity.this,
-					"onChange,selfChange:" + selfChange + ",Name:" + name,
-					Toast.LENGTH_SHORT).show();
+			} else { // update
+				Toast.makeText(MainActivity.this,
+						"onChange,selfChange:" + selfChange + ",Name:" + name,
+						Toast.LENGTH_SHORT).show();
+			}
 			super.onChange(selfChange, uri);
 		}
 
