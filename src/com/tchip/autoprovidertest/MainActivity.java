@@ -88,7 +88,7 @@ public class MainActivity extends Activity {
 			case R.id.btnUpdate: {
 				Uri uri = Uri
 						.parse("content://com.tchip.provider.AutoProvider/state/name/"
-								+ etGetName.getText().toString());
+								+ etSetName.getText().toString());
 				ContentResolver contentResolver = getContentResolver();
 				ContentValues values = new ContentValues();
 				values.put("value", etSetValue.getText().toString());
@@ -111,17 +111,16 @@ public class MainActivity extends Activity {
 
 		@Override
 		public void onChange(boolean selfChange, Uri uri) {
+
+			String name = uri.getPathSegments().get(2);
 			Toast.makeText(MainActivity.this,
-					"onChange,selfChange:" + selfChange + ",Uri:" + uri,
+					"onChange,selfChange:" + selfChange + ",Name:" + name,
 					Toast.LENGTH_SHORT).show();
 			super.onChange(selfChange, uri);
 		}
 
 		@Override
 		public void onChange(boolean selfChange) {
-			Toast.makeText(MainActivity.this,
-					"onChange,selfChange:" + selfChange, Toast.LENGTH_SHORT)
-					.show();
 			super.onChange(selfChange);
 		}
 
